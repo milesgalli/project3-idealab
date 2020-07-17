@@ -8,7 +8,7 @@ export const Register = () => {
     password2: "",
   });
 
-  const { name, email, passoword, password2 } = formData;
+  const { name, email, password, password2 } = formData;
   const onChange = (e) =>
     setFromData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = (e) => {
@@ -80,3 +80,4 @@ export const Register = () => {
     </Fragment>
   );
 };
+export default Register;

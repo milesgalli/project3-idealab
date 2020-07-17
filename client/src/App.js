@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import "./App.css";
-import Navbar from "./components/layout/Navbar";
+import Navbar from "./componments/layouts/Navbar";
 import Landing from "./componments/layouts/Landing";
 import Register from "./componments/auth/Register";
 import Login from "./componments/auth/Login";
@@ -15,7 +15,7 @@ const App = () => (
     <section className = "container">
       <Switch>
         <Route exact path = "/register" component = {Register}></Route>
-        <Route exact path = "/login" component = {login}></Route>
+        <Route exact path = "/login" component = {Login}></Route>
       </Switch>
     </section>
   </Fragment>
