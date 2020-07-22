@@ -27,7 +27,7 @@ router.get('/', auth, async (req, res) => {
 
 // NEED TO CHANGE AFTER WORKING FULLY 
 router.post(
-  '/',
+  '/api/users',
   [
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password is required').exists()
