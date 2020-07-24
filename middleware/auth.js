@@ -9,6 +9,7 @@ module.exports = function (req, res, next) {
   // check if no token
 
   if (!token) {
+    console.log(token)
     return res.status(401).json({ msg: "No token, access denied" });
   }
 
@@ -19,6 +20,9 @@ module.exports = function (req, res, next) {
     req.user = decoded.user;
     next();
   } catch (err) {
+    
+    console.log(res)
+  
     res.status(401).json({ msg: "Token is not valid" });
   }
 };

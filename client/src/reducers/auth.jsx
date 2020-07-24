@@ -1,12 +1,12 @@
 import {
   REGISTER_SUCCESS,
-  //REGISTER_FAIL,
+  // REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   // LOGIN_FAIL,
   LOGOUT,
-  // ACCOUNT_DELETED
+  ACCOUNT_DELETED
 } from '../actions/types';
 
 const initialState = {
@@ -41,14 +41,14 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         loading: false
       };
-    // case ACCOUNT_DELETED:
-    //   return {
-    //     ...state,
-    //     token: null,
-    //     isAuthenticated: false,
-    //     loading: false,
-    //     user: null
-    //   };
+    case ACCOUNT_DELETED:
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null
+      };
     case AUTH_ERROR:
     case LOGOUT:
       return {

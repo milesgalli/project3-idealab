@@ -4,13 +4,14 @@ const bcrypt = require('bcryptjs');
 const auth = require('../../middleware/auth');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const { check, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
 
 // @route    GET api/auth
 // @desc     Get user by token
 // @access   Private
+
 router.get('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -27,10 +28,10 @@ router.get('/', auth, async (req, res) => {
 
 // NEED TO CHANGE AFTER WORKING FULLY 
 router.post(
-  '/api/users',
+  '/',
   [
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is required').exists()
+    body('email', 'Please include a valid email').isEmail(),
+    body('password', 'Password is required').exists()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -73,7 +74,7 @@ router.post(
         }
       );
     } catch (err) {
-      console.error(err.message);
+      console.log(err.message);
       res.status(500).send('Server error');
     }
   }

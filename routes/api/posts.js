@@ -1,19 +1,19 @@
   
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 
 const Post = require('../../models/Posts');
 const User = require('../../models/User');
-const checkObjectId = require('../../middleware/checkObjectId');
+const bodyObjectId = require('../../middleware/bodyObjectId');
 
 // @route    POST api/posts
 // @desc     Create a post
 // @access   Private
 router.post(
   '/',
-  [auth, [check('text', 'Text is required').not().isEmpty()]],
+  [auth, [body('text', 'Text is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -57,7 +57,7 @@ router.get('/', auth, async (req, res) => {
 // @route    GET api/posts/:id
 // @desc     Get post by ID
 // @access   Private
-router.get('/:id', [auth, checkObjectId('id')], async (req, res) => {
+router.get('/:id', [auth, bodyObjectId('id')], async (req, res) => {
  try {
    const post = await Post.findById(req.params.id);
    
@@ -76,7 +76,7 @@ router.get('/:id', [auth, checkObjectId('id')], async (req, res) => {
 // @route    DELETE api/posts/:id
 // @desc     Delete a post
 // @access   Private
-router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
+router.delete('/:id', [auth, bodyObjectId('id')], async (req, res) => {
  try {
    const post = await Post.findById(req.params.id);
 
@@ -102,7 +102,7 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
 // @route    PUT api/posts/like/:id
 // @desc     Like a post
 // @access   Private
-router.put('/like/:id', [auth, checkObjectId('id')], async (req, res) => {
+router.put('/like/:id', [auth, bodyObjectId('id')], async (req, res) => {
  try {
    const post = await Post.findById(req.params.id);
 
@@ -125,7 +125,7 @@ router.put('/like/:id', [auth, checkObjectId('id')], async (req, res) => {
 // @route    PUT api/posts/unlike/:id
 // @desc     Unlike a post
 // @access   Private
-router.put('/unlike/:id', [auth, checkObjectId('id')], async (req, res) => {
+router.put('/unlike/:id', [auth, bodyObjectId('id')], async (req, res) => {
  try {
    const post = await Post.findById(req.params.id);
 
@@ -155,8 +155,8 @@ router.post(
  '/comment/:id',
  [
    auth,
-   checkObjectId('id'),
-   [check('text', 'Text is required').not().isEmpty()]
+   bodyObjectId('id'),
+   [body('text', 'Text is required').not().isEmpty()]
  ],
  async (req, res) => {
    const errors = validationResult(req);
