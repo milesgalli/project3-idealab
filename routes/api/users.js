@@ -1,27 +1,26 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { body, validationResult } = require("express-validator");
-const brcypt = require("bcryptjs");
-const normalize = require("normalize-url");
-const User = require("../../models/User");
-const gravatar = require("gravatar");
-const jwt = require("jsonwebtoken");
-const config = require("config");
+const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const { check, validationResult } = require('express-validator');
+const normalize = require('normalize-url');
+
+const User = require('../../models/User');
+
 // @route    POST api/users
 // @desc     Register user
-// @access   Pub
-
+// @access   Public
 router.post(
-  "/",
+  '/',
   [
-    body("name", "Name is required!").not().isEmpty(),
-
-    body("email", "Please enter a valid emai").isEmail(),
-
-    body(
-      "password",
-      "please enter a password that is atleast 6 characters"
-    ).isLength({ min: 6 }),
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please include a valid email').isEmail(),
+    check(
+      'password',
+      'Please enter a password with 6 or more characters'
+    ).isLength({ min: 6 })
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -31,23 +30,20 @@ router.post(
 
     const { name, email, password } = req.body;
 
-    // see if user exists
-
     try {
       let user = await User.findOne({ email });
 
       if (user) {
         return res
           .status(400)
-          .json({ erros: [{ msg: "User already exists" }] });
+          .json({ errors: [{ msg: 'User already exists' }] });
       }
 
-      // get users gravatar
       const avatar = normalize(
         gravatar.url(email, {
-          s: "200",
-          r: "pg",
-          d: "mm",
+          s: '200',
+          r: 'pg',
+          d: 'mm'
         }),
         { forceHttps: true }
       );
@@ -56,43 +52,35 @@ router.post(
         name,
         email,
         avatar,
-        password,
+        password
       });
 
-      // encrypt password using brcypt
+      const salt = await bcrypt.genSalt(10);
 
-      const salt = await brcypt.genSalt(10);
-
-      user.password = await brcypt.hash(password, salt);
+      user.password = await bcrypt.hash(password, salt);
 
       await user.save();
-      // return jasonwebtoken
 
       const payload = {
         user: {
-          id: user.id,
-        },
+          id: user.id
+        }
       };
 
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
-
-        //change before deploying to heroku
-
-        { expiresIn: 3500000 }, 
+        config.get('jwtSecret'),
+        { expiresIn: '5 days' },
         (err, token) => {
-          if(err) throw err; 
-          res.json({token})
+          if (err) throw err;
+          res.json({ token });
         }
       );
-
-      // res.send("User Registerd");
-
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("server error");
+      res.status(500).send('Server error');
     }
   }
 );
+
 module.exports = router;

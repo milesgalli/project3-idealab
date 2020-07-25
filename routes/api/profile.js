@@ -3,14 +3,14 @@ const axios = require('axios');
 const config = require('config');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 // bring in normalize to give us a proper url, regardless of what user entered
 const normalize = require('normalize-url');
-const bodyObjectId = require('../../middleware/bodyObjectId');
+const checkObjectId = require('../../middleware/checkObjectId');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
-const Post = require('../../models/Posts');
+const Post = require('../../models/Post');
 
 // @route    GET api/profile/me
 // @desc     Get current users profile
@@ -40,8 +40,8 @@ router.post(
   [
     auth,
     [
-      body('status', 'Status is required').not().isEmpty(),
-      body('skills', 'Skills is required').not().isEmpty()
+      check('status', 'Status is required').not().isEmpty(),
+      check('skills', 'Skills is required').not().isEmpty()
     ]
   ],
   async (req, res) => {
@@ -119,7 +119,7 @@ router.get('/', async (req, res) => {
 // @access   Public
 router.get(
   '/user/:user_id',
-  bodyObjectId('user_id'),
+  checkObjectId('user_id'),
   async ({ params: { user_id } }, res) => {
     try {
       const profile = await Profile.findOne({
@@ -163,9 +163,9 @@ router.put(
   [
     auth,
     [
-      body('title', 'Title is required').not().isEmpty(),
-      body('company', 'Company is required').not().isEmpty(),
-      body('from', 'From date is required and needs to be from the past')
+      check('title', 'Title is required').not().isEmpty(),
+      check('company', 'Company is required').not().isEmpty(),
+      check('from', 'From date is required and needs to be from the past')
         .not()
         .isEmpty()
         .custom((value, { req }) => (req.body.to ? value < req.body.to : true))
@@ -240,10 +240,10 @@ router.put(
   [
     auth,
     [
-      body('school', 'School is required').not().isEmpty(),
-      body('degree', 'Degree is required').not().isEmpty(),
-      body('fieldofstudy', 'Field of study is required').not().isEmpty(),
-      body('from', 'From date is required and needs to be from the past')
+      check('school', 'School is required').not().isEmpty(),
+      check('degree', 'Degree is required').not().isEmpty(),
+      check('fieldofstudy', 'Field of study is required').not().isEmpty(),
+      check('from', 'From date is required and needs to be from the past')
         .not()
         .isEmpty()
         .custom((value, { req }) => (req.body.to ? value < req.body.to : true))

@@ -1,6 +1,4 @@
-
 import api from '../utils/api';
-
 import { setAlert } from './alert';
 import {
   REGISTER_SUCCESS,
@@ -16,23 +14,17 @@ import {
 export const loadUser = () => async dispatch => {
   try {
     const res = await api.get('/auth');
- 
- 
+
     dispatch({
       type: USER_LOADED,
       payload: res.data
     });
-
   } catch (err) {
-
-    console.log(err)
     dispatch({
       type: AUTH_ERROR
     });
   }
-
 };
-
 
 // Register User
 export const register = formData => async dispatch => {
@@ -44,12 +36,10 @@ export const register = formData => async dispatch => {
       payload: res.data
     });
     dispatch(loadUser());
-    
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (errors) {
-      console.log(err)
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 

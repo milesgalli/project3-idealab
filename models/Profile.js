@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-// NEED TO CHANGE AFTER WORKING FULLY 
-
 const ProfileSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,

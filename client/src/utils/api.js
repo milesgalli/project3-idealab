@@ -8,7 +8,6 @@ const api = axios.create({
     'Content-Type': 'application/json'
   }
 });
-
 /**
  intercept any error responses from the api
  and check if the token is no longer valid.
