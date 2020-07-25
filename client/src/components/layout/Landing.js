@@ -26,6 +26,8 @@ const Landing = ({ isAuthenticated }) => {
           </div>
         </div>
       </div>
+
+    
     </section>
   );
 };
