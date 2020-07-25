@@ -1,6 +1,6 @@
 const express = require('express'); 
 const connectDB = require('./config/db')
-const cors = require("cors");
+// const cors = require("cors");
 const corsConfig = require('./config/cors');
 
 
@@ -8,7 +8,7 @@ const app = express();
 
 // connect databse 
 
-app.use(cors(corsConfig));
+// app.use(cors(corsConfig));
 
 connectDB(); 
 

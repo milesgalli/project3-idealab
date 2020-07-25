@@ -1,6 +1,6 @@
 
 import api from '../utils/api';
-import axios from 'axios';
+
 import { setAlert } from './alert';
 import {
   REGISTER_SUCCESS,
@@ -15,7 +15,7 @@ import {
 // Load User
 export const loadUser = () => async dispatch => {
   try {
-    const res = await axios.get('/auth');
+    const res = await api.get('/auth');
  
  
     dispatch({
