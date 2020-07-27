@@ -79,15 +79,15 @@ const ProfileForm = ({
         <div className="form-group">
           <select name="status" value={status} onChange={onChange}>
             <option>* Select Professional Status</option>
-            <option value="Developer">Developer</option>
-            <option value="Junior Developer">Junior Developer</option>
-            <option value="Senior Developer">Senior Developer</option>
-            <option value="Manager">Manager</option>
+            <option value="Developer">Looking to Start a Company </option>
+            <option value="Junior Developer">Looking For a Cofounder</option>
+            <option value="Senior Developer">Looking to Meet Other Entrepreneurs</option>
+            <option value="Manager">Looking to Work In a Start- Up</option>
             <option value="Student or Learning">Student or Learning</option>
-            <option value="Instructor">Instructor or Teacher</option>
-            <option value="Intern">Intern</option>
+  
             <option value="Other">Other</option>
           </select>
+
           <small className="form-text">
             Give us an idea of where you are at in your career
           </small>
@@ -125,7 +125,7 @@ const ProfileForm = ({
             onChange={onChange}
           />
           <small className="form-text">
-            City & state suggested (eg. Boston, MA)
+            City & state suggested (eg. Perth, WA)
           </small>
         </div>
         <div className="form-group">
@@ -137,7 +137,7 @@ const ProfileForm = ({
             onChange={onChange}
           />
           <small className="form-text">
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
+            Please use comma separated values (eg. Negotiation, Sales, Coding, Marketing, Corporate Finance)
           </small>
         </div>
         <div className="form-group">
